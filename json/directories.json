@@ -1,0 +1,19 @@
+{
+
+    "src": {
+        "name": "src"
+    },
+
+    "assets": {
+        "name": "assets"
+    },
+
+    "components": {
+        "name": "components"
+    },
+
+    "classes": {
+        "name": "clases"
+    }
+
+}   

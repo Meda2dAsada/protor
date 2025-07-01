@@ -1,0 +1,20 @@
+{
+
+    "main_py": {
+        "name": "main.py",
+        "content": "print('hello world')"
+    },
+    "test_py": {
+        "name": "test.py",
+        "content": ""
+    },
+    "init_py": {
+        "name": "__init__.py",
+        "content": ""
+    },
+    "git_ignore": {
+        "name": ".gitignore",
+        "content": ""
+    }
+    
+}
