@@ -1,7 +1,7 @@
 import os
 from src.constants.const import USERPROFILE
 
-class RouteChecker:
+class PathChecker:
     @staticmethod
     def is_file(file: str):
         return os.path.isfile(file)
@@ -14,5 +14,8 @@ class RouteChecker:
     def get_current_directory(): return os.getcwd()
 
     @staticmethod
-    def get_user_path(): return os.environ.get(USERPROFILE).replace('\\', '/')
+    def get_user_path(): return PathChecker.get_env(USERPROFILE).replace('\\', '/')
     
+
+    @staticmethod
+    def get_env(key: str): return os.environ.get(key)

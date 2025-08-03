@@ -23,7 +23,7 @@ class SystemCreator:
         return ''.join(start)
 
     @staticmethod
-    def write_entry(system_entry: str, content: str, entry_type: str):
+    def write_entry(system_entry: str, content: str | None, entry_type: str):
 
         if entry_type == DIRECTORY:
             SystemCreator.__write_directory(system_entry)
@@ -47,3 +47,13 @@ class SystemCreator:
 
             except (PermissionError, FileExistsError):
                 pass
+
+    @staticmethod
+    def delete_file(path: str):
+        try:
+            os.remove(path)
+
+        except FileNotFoundError:
+            pass
+        except PermissionError as error:
+            raise error   
