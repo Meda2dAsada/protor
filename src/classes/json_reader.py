@@ -1,5 +1,4 @@
 import json
-from textual.widgets import Tree
 
 class JsonReader:
     def __init__(self, path: str) -> None:

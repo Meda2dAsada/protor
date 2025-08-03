@@ -6,13 +6,11 @@ from src.classes.system_creator import SystemCreator
 
 class Directory(SystemEntry):
 
-    def __init__(self, name: str, path: str = None, content: list['Directory', File] = []):
+    def __init__(self, name: str, path: str = None, content: list[SystemEntry] = []):
         super().__init__(name, path, DIRECTORY)
-        self.__content: list[Directory, File] = []
+        self.__content: list[SystemEntry] = []
         self.set_content(content)
 
-    def __validate_system_entry(self, system_entry: SystemEntry):
-        return isinstance(system_entry, (Directory, File)) and system_entry.get_absolute_path() is None
 
     def write_self(self):
         SystemCreator.write_entry(self.get_absolute_path(), None, self.get_entry_type())
@@ -29,9 +27,14 @@ class Directory(SystemEntry):
         return True
 
     def add_entry(self, system_entry: SystemEntry):
-        if self.__validate_system_entry(system_entry):
+        if isinstance(system_entry, SystemEntry):
+            system_entry.set_path(self.get_absolute_path())
+
+            if isinstance(system_entry, Directory):
+                for entry in system_entry.get_content():
+                    entry.set_path(system_entry.get_absolute_path())
+
             self.__content.append(system_entry)
-    
 
     def set_content(self, content: list[SystemEntry]):
         for entry in content:

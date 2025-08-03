@@ -32,7 +32,7 @@ class SystemEntryScreen(JsonReader, Screen):
                         if self.__for_directories:
                             yield DirectoryDisplay(k, v)
                         else:
-                            FileDisplay(k, v)
+                            yield FileDisplay(k, v)
                         
 
             yield self.__back_button
