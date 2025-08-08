@@ -13,14 +13,12 @@ class Directory(SystemEntry):
 
 
     def write_self(self):
-        print(self.get_absolute_path(), self.get_entry_type())
         SystemCreator.write_entry(self.get_absolute_path(), None, self.get_entry_type())
         self.write_content()
 
     def write_content(self):
         for entry in self.get_content():
             if isinstance(entry, (Directory, File)):
-                print(entry)
                 entry.write_self()
 
     def add_entry(self, system_entry: SystemEntry):

@@ -10,6 +10,7 @@ class File(SystemEntry):
         self.__split_name: tuple = None
         self.__file_name: str = None
         self.__extension: str = None
+        self.__is_empty: bool = None
         
         self.set_content(content)
         self.__set_split_name(name)
@@ -26,7 +27,14 @@ class File(SystemEntry):
             self.__content = content
         else:
             self.__content = ''
+        
+        self.__set_is_empty(bool(self.__content))
 
+    def __set_is_empty(self, is_empty: bool):
+        if isinstance(is_empty, bool):
+            self.__is_empty = is_empty
+
+    def get_is_empty(self): return self.__is_empty
     def get_content(self): return self.__content
     def get_split_name(self): return self.__split_name
     def get_extension(self): return self.__extension
