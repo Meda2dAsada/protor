@@ -1,5 +1,5 @@
 
-EXTENSIONS = {
+EXTENSIONS: dict[str, str] = {
     'sh': 'bash',
     'bash': 'bash',
     'css': 'css',
@@ -25,13 +25,13 @@ EXTENSIONS = {
     'yml': 'yaml',
 }
 
-INSERTIONS = {'(': '()', '{': '{}', '[': '[]',  '<': '<>', '\"': '""', '\'': '\'\''}
-FORBIDDEN_CHARS = ['\\', '/', ':', '*', '?', '"', '<', '>', '|']
-MAX_NAME_LENGTH = 12
-MAX_EXTENSION_LENGTH = 9
-FILE = 'file'
-DIRECTORY = 'directory'
-FILES = 'files'
-DIRECTORIES = 'directories'
-TEMPLATES= 'templates'
-USERPROFILE = 'USERPROFILE'
+INSERTIONS: dict[str] = {'(': '()', '{': '{}', '[': '[]',  '<': '<>', '\"': '""', '\'': '\'\''}
+FORBIDDEN_CHARS: dict[str] = ['\\', '/', ':', '*', '?', '"', '<', '>', '|']
+MAX_NAME_LENGTH: int = 12
+MAX_EXTENSION_LENGTH: int = 9
+FILE: str = 'file'
+DIRECTORY: str = 'directory'
+FILES: str = 'files'
+DIRECTORIES: str = 'directories'
+TEMPLATES: str = 'templates'
+USERPROFILE: str = 'USERPROFILE'

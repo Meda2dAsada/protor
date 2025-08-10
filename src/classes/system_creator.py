@@ -12,11 +12,14 @@ class SystemCreator:
         extension = split.pop()
         
         return '.'.join(split), extension
+    
+    @staticmethod
+    def reduce_strings(files: tuple[str], sizes: tuple[int]):
+        return [f'[{file[:size]}\u2026]' if len(file) > size else file for file, size, in zip(files, sizes)]
 
     @staticmethod
-    def join_file(file_name: tuple[str]):
+    def join_file(file_name: list[str] | tuple[str]):
         start, end = file_name
-
         if end:
             return '.'.join(file_name)
         
@@ -24,12 +27,11 @@ class SystemCreator:
 
     @staticmethod
     def write_entry(system_entry: str, content: str | None, entry_type: str):
-
         if entry_type == DIRECTORY:
             SystemCreator.__write_directory(system_entry)
         elif entry_type == FILE:
             SystemCreator.__write_file(system_entry, content)
-    
+
     @staticmethod
     def __write_directory(directory: str):
         try:
