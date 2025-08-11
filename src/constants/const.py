@@ -16,6 +16,8 @@ EXTENSIONS: dict[str, str] = {
     'md': 'markdown',
     'markdown': 'markdown',
     'py': 'python',
+    'pyw': 'python',
+    'ipynb': 'python',
     'rs': 'rust',
     're': 'regex',
     'regex': 'regex',

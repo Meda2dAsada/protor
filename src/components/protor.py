@@ -45,7 +45,7 @@ class Protor(App):
     @on(Button.Pressed, '#templates')
     def __on_templates_button(self):
         # opens the input screen when the "new proyect" button is pressed
-        self.push_screen(EditorScreen(File('main.git')))
+        self.push_screen(EditorScreen(File('main.ipynb')))
 
 
     @on(Button.Pressed, '#exit')
