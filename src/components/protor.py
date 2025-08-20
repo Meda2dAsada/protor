@@ -13,11 +13,10 @@ from src.classes.file import File
 from src.classes.directory import Directory
 from src.classes.config_creator import ConfigCreator
 
-
 # main application class that defines the UI and core logic of the app
 class Protor(App):
     # path to the CSS file that styles the application
-    #TODO: CSS_PATH = ConfigCreator.style_file() # replace this line at the end
+    #TODO: CSS_PATH = ConfigCreator.get_style_file() # replace this line at the end
     CSS_PATH = '../../style/protor.tcss'
 
     def __init__(self):

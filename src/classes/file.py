@@ -23,7 +23,7 @@ class File(SystemEntry):
         SystemCreator.write_entry(self.get_absolute_path(), self.get_content(), self.get_entry_type())
 
     def set_content(self, content: str):
-        if self.validate_strings(content):
+        if self.not_empty(content):
             self.__content = content
         else:
             self.__content = ''

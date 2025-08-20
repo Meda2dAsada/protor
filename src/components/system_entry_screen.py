@@ -6,8 +6,8 @@ from textual.widgets import Footer, Header, Button
 from textual.containers import Container, Vertical, ScrollableContainer
 
 from src.classes.json_reader import JsonReader
-from src.constants.const import FILES, DIRECTORIES
 from src.components.file_display import FileDisplay
+from src.classes.config_creator import ConfigCreator
 from src.components.directory_display import DirectoryDisplay
 
 
@@ -17,7 +17,9 @@ class SystemEntryScreen(JsonReader, Screen):
     def __init__(self, for_directories: bool):
         self.__for_directories = for_directories
         self.__back_button = Button('Go back', id='back', classes='option_button')
-        json_path = f'json/{DIRECTORIES if self.__for_directories else FILES}.json'
+        
+        json_path = f'{ConfigCreator.get_json_dir()}/{ConfigCreator.DIRECTORIES_FILE if self.__for_directories else ConfigCreator.FILES_FILE}'
+        print(json_path)
         JsonReader.__init__(self, json_path)
         Screen.__init__(self)
 
