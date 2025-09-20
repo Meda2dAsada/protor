@@ -10,7 +10,7 @@ from src.components.file_display import FileDisplay
 from src.classes.config_creator import ConfigCreator
 from src.components.directory_display import DirectoryDisplay
 
-
+#ERROR: la clase json reader hace un problema de hasheo
 class SystemEntryScreen(JsonReader, Screen):
     BINDINGS = [Binding('ctrl+b', 'go_back', 'Go back')]
 

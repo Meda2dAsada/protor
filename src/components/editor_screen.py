@@ -7,7 +7,7 @@ from textual.containers import Container, Center, Vertical, Middle
 
 from src.classes.file import File
 from src.components.editor import Editor
-from src.classes.system_creator import SystemCreator
+from src.classes.entry_creator import EntryCreator
 from src.components.warning_screen import WarningScreen
 from src.constants.const import MAX_NAME_LENGTH, MAX_EXTENSION_LENGTH, EXTENSIONS
 
@@ -42,8 +42,8 @@ class EditorScreen(Screen):
 
     def __get_title_format(self):
         # returns a formatted title based on file name and extension, truncating if needed
-        reduced = SystemCreator.reduce_strings(self.__file.get_split_name(), (MAX_NAME_LENGTH, MAX_EXTENSION_LENGTH))
-        return SystemCreator.join_file(reduced)
+        reduced = EntryCreator.reduce_strings(self.__file.get_split_name(), (MAX_NAME_LENGTH, MAX_EXTENSION_LENGTH))
+        return EntryCreator.join_file(reduced)
 
     def __set_title(self):
         # updates the screen title to show file name and save status

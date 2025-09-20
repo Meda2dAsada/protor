@@ -5,8 +5,10 @@ from textual.binding import Binding
 from textual.app import ComposeResult
 from textual.widgets import Footer, Header, Button, Label
 from textual.containers import Container, Center, Vertical, Middle
-from src.components.system_entry_screen import SystemEntryScreen
 
+###TODO: change SystemEntryScreen name to EntryScreen
+from src.components.system_entry_screen import SystemEntryScreen
+###
 
 class ContantsScreen(Screen):
     BINDINGS = [Binding('ctrl+b', 'go_back', 'Go back')]

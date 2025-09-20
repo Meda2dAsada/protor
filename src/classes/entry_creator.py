@@ -1,8 +1,7 @@
-#COMMENT: protor(proyect - creator)
 import os
 from src.constants.const import DIRECTORY, FILE
 
-class SystemCreator:
+class EntryCreator:
     @staticmethod
     def trim_file(file_name: str):
         if '.' not in file_name:
@@ -26,11 +25,11 @@ class SystemCreator:
         return ''.join(start)
 
     @staticmethod
-    def write_entry(system_entry: str, content: str | None, entry_type: str):
+    def write_entry(entry: str, content: str | None, entry_type: str):
         if entry_type == DIRECTORY:
-            SystemCreator.__write_directory(system_entry)
+            EntryCreator.__write_directory(entry)
         elif entry_type == FILE:
-            SystemCreator.__write_file(system_entry, content)
+            EntryCreator.__write_file(entry, content)
 
     @staticmethod
     def __write_directory(directory: str):

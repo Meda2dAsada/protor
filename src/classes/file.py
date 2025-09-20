@@ -1,42 +1,55 @@
+from src.classes.entry import Entry
 from src.constants.const import FILE
-from src.classes.system_entry import SystemEntry
-from src.classes.system_creator import SystemCreator
+from src.classes.entry_creator import EntryCreator
 
-class File(SystemEntry):
-
+class File(Entry):
     def __init__(self, name: str, path: str = None, content: str | None = None):
         super().__init__(name, path, FILE)
-        self.__content: str = None
-        self.__split_name: tuple = None
+        self.__split_name: tuple[str, str] = None
         self.__file_name: str = None
         self.__extension: str = None
-        self.__is_empty: bool = None
-        
-        self.set_content(content)
-        self.__set_split_name(name)
+        self.__content: str = None
 
-    def __set_split_name(self, name: str):
-        self.__split_name = SystemCreator.trim_file(name)
-        self.__file_name, self.__extension = self.__split_name
+        self.split_name: tuple[str, str] = name
+        self.content: str = content
+
+    @property
+    def split_name(self) -> tuple[str, str]:
+        return self.__split_name
+    
+    @split_name.setter
+    def split_name(self, split_name: str) -> None:
+        if self.not_empty(split_name) and not self.split_name:
+            self.__split_name = EntryCreator.trim_file(split_name)
+            self.__file_name, self.__extension = self.__split_name
+
+    @property
+    def file_name(self) -> str:
+        return self.__file_name
+    
+    @property
+    def extension(self) -> str:
+        return self.__extension
+
+    @property
+    def content(self) -> str:
+        return self.__content
+    
+    @content.setter
+    def content(self, content: str) -> None:
+        self.__content = content if self.not_empty(content) else ''
+
+    @property
+    def is_empty(self) -> bool:
+        return not bool(self.__content)
 
     def write_self(self):
-        SystemCreator.write_entry(self.get_absolute_path(), self.get_content(), self.get_entry_type())
+        EntryCreator.write_entry(self.absolute_path, self.content, self.entry_type)
 
-    def set_content(self, content: str):
-        if self.not_empty(content):
-            self.__content = content
-        else:
-            self.__content = ''
-        
-        self.__set_is_empty(bool(self.__content))
+    def __hash__(self):
+        return super().__hash__() + hash(self.content)
 
-    def __set_is_empty(self, is_empty: bool):
-        if isinstance(is_empty, bool):
-            self.__is_empty = is_empty
-
-    def get_is_empty(self): return self.__is_empty
-    def get_content(self): return self.__content
-    def get_split_name(self): return self.__split_name
-    def get_extension(self): return self.__extension
-    def get_file_name(self): return self.__file_name
-
+    def __eq__(self, other: 'File'):
+        if not isinstance(other, File):
+            return False
+        return super().__eq__(other) and self.content == other.content

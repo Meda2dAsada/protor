@@ -1,39 +1,60 @@
 
 from src.classes.file import File
+from src.classes.entry import Entry
 from src.constants.const import DIRECTORY
-from src.classes.system_entry import SystemEntry
-from src.classes.system_creator import SystemCreator
+from src.classes.entry_creator import EntryCreator
 
-class Directory(SystemEntry):
-
-    def __init__(self, name: str, path: str = None, content: list[SystemEntry] = []):
+class Directory(Entry):
+    def __init__(self, name: str, path: str = None, content: list[Entry] = None):
         super().__init__(name, path, DIRECTORY)
-        self.__content: list[Directory, File] = []
-        self.set_content(content)
+        self.__content: list[Entry] = None
+        self.content = content
 
+    @property
+    def content(self) -> list[Entry]:
+        return self.__content
+
+    @content.setter
+    def content(self, content: list[Entry]) -> None:
+        if self.__content is None:
+            self.__content = []
+
+        if isinstance(content, list) and all(isinstance(entry, (Directory, File)) for entry in content):
+            for entry in content:
+                self.add(entry)
+
+    @property
+    def is_empty(self) -> bool:
+        return len(self.__content) == 0
+
+    def add(self, entry: Entry):
+        if isinstance(entry, (Directory, File)):
+            entry.path = self.absolute_path
+
+            if isinstance(entry, Directory):
+                for sub_entry in entry.content:
+                    sub_entry.path = entry.absolute_path
+
+            self.__content.append(entry)
+
+    def extends(self, entries: list[Entry]):
+        for entry in entries:
+            self.add(entry)
 
     def write_self(self):
-        SystemCreator.write_entry(self.get_absolute_path(), None, self.get_entry_type())
+        EntryCreator.write_entry(self.absolute_path, None, self.entry_type)
         self.write_content()
 
     def write_content(self):
-        for entry in self.get_content():
+        for entry in self.content:
             if isinstance(entry, (Directory, File)):
                 entry.write_self()
 
-    def add_entry(self, system_entry: SystemEntry):
+    def __hash__(self):
+        return super().__hash__()
 
-        if isinstance(system_entry, SystemEntry):
-            system_entry.set_path(self.get_absolute_path())
-            
-            if isinstance(system_entry, Directory):
-                for entry in system_entry.get_content():
-                    entry.set_path(system_entry.get_absolute_path())
+    def __eq__(self, other: 'Directory'):
+        if not isinstance(other, Directory):
+            return False
+        return super().__eq__(other) and self.content == other.content
 
-            self.__content.append(system_entry)
-
-    def set_content(self, content: list[SystemEntry]):
-        for entry in content:
-            self.add_entry(entry)
-
-    def get_content(self): return self.__content
