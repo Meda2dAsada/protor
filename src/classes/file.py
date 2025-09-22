@@ -20,7 +20,7 @@ class File(Entry):
     @split_name.setter
     def split_name(self, split_name: str) -> None:
         if self.not_empty(split_name) and not self.split_name:
-            self.__split_name = EntryCreator.trim_file(split_name)
+            self.__split_name = EntryCreator.trim_extension(split_name)
             self.__file_name, self.__extension = self.__split_name
 
     @property

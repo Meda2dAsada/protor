@@ -6,9 +6,7 @@ from textual.app import ComposeResult
 from textual.widgets import Footer, Header, Button, Label
 from textual.containers import Container, Center, Vertical, Middle
 
-###TODO: change SystemEntryScreen name to EntryScreen
-from src.components.system_entry_screen import SystemEntryScreen
-###
+from src.components.entry_screen import EntryScreen
 
 class ContantsScreen(Screen):
     BINDINGS = [Binding('ctrl+b', 'go_back', 'Go back')]
@@ -20,11 +18,11 @@ class ContantsScreen(Screen):
 
     @on(Button.Pressed, '#directories')
     def __on_directories_button(self, event: Button.Pressed):
-        self.app.push_screen(SystemEntryScreen(True))
+        self.app.push_screen(EntryScreen(True))
 
     @on(Button.Pressed, '#files')
     def __on_files_button(self, event: Button.Pressed):
-        self.app.push_screen(SystemEntryScreen(False))
+        self.app.push_screen(EntryScreen(False))
 
     @on(Button.Pressed, '#back')
     def __on_back_button(self, event: Button.Pressed):

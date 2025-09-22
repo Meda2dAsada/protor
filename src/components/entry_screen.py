@@ -7,19 +7,22 @@ from textual.containers import Container, Vertical, ScrollableContainer
 
 from src.classes.json_reader import JsonReader
 from src.components.file_display import FileDisplay
+from src.classes.path_manager import PathManager
 from src.classes.config_creator import ConfigCreator
 from src.components.directory_display import DirectoryDisplay
 
-#ERROR: la clase json reader hace un problema de hasheo
-class SystemEntryScreen(JsonReader, Screen):
+#ERROR: JsonReader causes and error with hash
+class EntryScreen(JsonReader, Screen):
     BINDINGS = [Binding('ctrl+b', 'go_back', 'Go back')]
 
     def __init__(self, for_directories: bool):
         self.__for_directories = for_directories
         self.__back_button = Button('Go back', id='back', classes='option_button')
         
-        json_path = f'{ConfigCreator.get_json_dir()}/{ConfigCreator.DIRECTORIES_FILE if self.__for_directories else ConfigCreator.FILES_FILE}'
-        print(json_path)
+        json_path = PathManager.join_paths(
+            ConfigCreator.DIRECTORIES_FILE if self.__for_directories else ConfigCreator.FILES_FILE,
+            ConfigCreator.get_json_dir(),
+        )
         JsonReader.__init__(self, json_path)
         Screen.__init__(self)
 

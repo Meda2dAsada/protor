@@ -3,7 +3,7 @@ from src.constants.const import DIRECTORY, FILE
 
 class EntryCreator:
     @staticmethod
-    def trim_file(file_name: str):
+    def trim_extension(file_name: str):
         if '.' not in file_name:
             return file_name, ''
 
@@ -13,8 +13,8 @@ class EntryCreator:
         return '.'.join(split), extension
     
     @staticmethod
-    def reduce_strings(files: tuple[str], sizes: tuple[int]):
-        return [f'[{file[:size]}\u2026]' if len(file) > size else file for file, size, in zip(files, sizes)]
+    def format_split_name(trimed: tuple[str], sizes: tuple[int]):
+        return [f'[{file[:size]}\u2026]' if len(file) > size else file for file, size, in zip(trimed, sizes)]
 
     @staticmethod
     def join_file(file_name: list[str] | tuple[str]):

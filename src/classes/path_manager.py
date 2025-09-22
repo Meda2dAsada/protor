@@ -25,8 +25,8 @@ class PathManager:
     def get_env(key: str): return os.environ.get(key)
 
     @staticmethod
-    def join_paths(entry: str, *dirs: str):
-        return '/'.join([*dirs, entry])
+    def join_paths(name: str, *dirs: str):
+        return '/'.join([*dirs, name])
 
     @staticmethod
     def split_paths(path: str):

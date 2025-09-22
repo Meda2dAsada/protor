@@ -4,7 +4,6 @@ class Entry:
     def __init__(self, name: str, path: str = None, entry_type: str = None):
         self.__name: str = None
         self.__path: str = None
-        self.__absolute_path: str = None
         self.__entry_type: str = None
         self.name: str = name
         self.path: str = path

@@ -16,7 +16,10 @@ class ConfigCreator:
 
     @staticmethod
     def working_dir(protor_path: bool):
-        return PathManager.get_user_path() if not protor_path else f'{PathManager.get_user_path()}/{ConfigCreator.PROTOR_DIR}'
+        return PathManager.get_user_path() if not protor_path else PathManager.join_paths(
+            ConfigCreator.PROTOR_DIR,
+            PathManager.get_user_path()
+        )
 
     @staticmethod
     def get_style_file():

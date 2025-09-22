@@ -4,7 +4,9 @@ from src.classes.entry import Entry
 
 # 1. Crear un directorio vacío
 root = Directory("root", 'home/asada')
+
 print(root)
+
 print("Inicial:", root.content)      # []
 print("is_empty:", root.is_empty)    # True
 
