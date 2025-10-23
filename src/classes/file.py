@@ -19,8 +19,8 @@ class File(Entry):
     
     @split_name.setter
     def split_name(self, split_name: str) -> None:
-        if self.not_empty(split_name) and not self.split_name:
-            self.__split_name = EntryCreator.trim_extension(split_name)
+        if self.not_empty(split_name) and self.split_name is None:
+            self.__split_name = File.trim(self)
             self.__file_name, self.__extension = self.__split_name
 
     @property
@@ -44,12 +44,38 @@ class File(Entry):
         return not bool(self.__content)
 
     def write_self(self):
-        EntryCreator.write_entry(self.absolute_path, self.content, self.entry_type)
+        EntryCreator.write_file(self.absolute_path, self.content)
 
     def __hash__(self):
-        return super().__hash__() + hash(self.content)
+        return super().__hash__()
 
     def __eq__(self, other: 'File'):
         if not isinstance(other, File):
             return False
         return super().__eq__(other) and self.content == other.content
+    
+    @staticmethod
+    def format_split_name(file: 'File', sizes: tuple[int]) -> str | None:
+        if len(sizes) == 2 and all(isinstance(size, int) for size in sizes):
+            return [f'[{file[:size]}\u2026]' if len(file) > size else file for file, size, in zip(file.split_name, sizes)]
+
+    @staticmethod
+    def trim(file: 'File') -> tuple[str, str] | None:
+
+        if isinstance(file, File):
+            if '.' not in file.name:
+                return file.name, ''
+
+            split = file.name.split('.')
+            extension = split.pop()
+            
+            return '.'.join(split), extension
+
+    @staticmethod
+    def join(file: 'File') -> str | None:
+        if isinstance(file, File):
+            start, end = file.split_name
+            if end:
+                return '.'.join(file.split_name)
+
+            return ''.join(start)

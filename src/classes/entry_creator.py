@@ -1,38 +1,8 @@
 import os
-from src.constants.const import DIRECTORY, FILE
 
 class EntryCreator:
     @staticmethod
-    def trim_extension(file_name: str):
-        if '.' not in file_name:
-            return file_name, ''
-
-        split = file_name.split('.')
-        extension = split.pop()
-        
-        return '.'.join(split), extension
-    
-    @staticmethod
-    def format_split_name(trimed: tuple[str], sizes: tuple[int]):
-        return [f'[{file[:size]}\u2026]' if len(file) > size else file for file, size, in zip(trimed, sizes)]
-
-    @staticmethod
-    def join_file(file_name: list[str] | tuple[str]):
-        start, end = file_name
-        if end:
-            return '.'.join(file_name)
-        
-        return ''.join(start)
-
-    @staticmethod
-    def write_entry(entry: str, content: str | None, entry_type: str):
-        if entry_type == DIRECTORY:
-            EntryCreator.__write_directory(entry)
-        elif entry_type == FILE:
-            EntryCreator.__write_file(entry, content)
-
-    @staticmethod
-    def __write_directory(directory: str):
+    def write_directory(directory: str):
         try:
             os.makedirs(directory)
 
@@ -40,7 +10,7 @@ class EntryCreator:
             pass
 
     @staticmethod
-    def __write_file(entry: str, content: str | None):
+    def write_file(entry: str, content: str | None):
         if entry:
             try: 
                 with open(entry, 'x', encoding='utf-8') as file:

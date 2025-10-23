@@ -15,9 +15,12 @@ class Entry:
     
     @name.setter
     def name(self, name: str) -> None:
-        if self.not_empty(name, True) and not self.__name:
-                self.__name = name.strip()
-    
+        name = name.strip() # delete white spaces on the start & end in name
+        if self.not_empty(name) and self.__name is None:
+                self.__name = name
+        else:
+            raise ValueError('Name must not be empty.')
+        
     @property
     def path(self) -> str:
         return self.__path
@@ -29,7 +32,7 @@ class Entry:
 
     @property
     def absolute_path(self) -> str:
-        return f'{self.__path}/{self.name}'
+        return PathManager.join(self.name, self.path) if self.path else PathManager.join(self.name)
     
     @property
     def entry_type(self) -> str:
@@ -37,14 +40,14 @@ class Entry:
     
     @entry_type.setter
     def entry_type(self, entry_type: str) -> None:
-        if self.not_empty(entry_type, True) and not self.__entry_type:
+        if self.not_empty(entry_type) and self.__entry_type is None:
             self.__entry_type = entry_type
 
-    def not_empty(self, content: str, strict_alnum: bool = False):
-        return PathManager.not_empty(content, strict_alnum)
+    def not_empty(self, content: str):
+        return PathManager.not_empty(content)
 
     def __repr__(self):
-        return f'{self.absolute_path or self.name}'
+        return self.absolute_path
 
     def __hash__(self):
         return hash(self.name) + hash(self.absolute_path)
@@ -52,4 +55,4 @@ class Entry:
     def __eq__(self, other: 'Entry'):
         if not isinstance(other, Entry):
             return False
-        return self.name == other.name and self.absolute_path == other.absolute_path
+        return self.absolute_path == other.absolute_path

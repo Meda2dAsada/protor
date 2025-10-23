@@ -16,14 +16,14 @@ class ConfigCreator:
 
     @staticmethod
     def working_dir(protor_path: bool):
-        return PathManager.get_user_path() if not protor_path else PathManager.join_paths(
+        return PathManager.get_user_path() if not protor_path else PathManager.join(
             ConfigCreator.PROTOR_DIR,
             PathManager.get_user_path()
         )
 
     @staticmethod
     def get_style_file():
-        return PathManager.join_paths(
+        return PathManager.join(
             ConfigCreator.STYLE_FILE,
             ConfigCreator.working_dir(True),
             ConfigCreator.STYLE_DIR
@@ -31,7 +31,7 @@ class ConfigCreator:
 
     @staticmethod
     def get_json_dir():
-        return PathManager.join_paths(
+        return PathManager.join(
             ConfigCreator.JSON_DIR,
             ConfigCreator.working_dir(True)
         )

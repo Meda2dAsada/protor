@@ -28,7 +28,7 @@ EXTENSIONS: dict[str, str] = {
 }
 
 INSERTIONS: dict[str] = {'(': '()', '{': '{}', '[': '[]',  '<': '<>', '\"': '""', '\'': '\'\''}
-FORBIDDEN_CHARS: dict[str] = ['\\', '/', ':', '*', '?', '"', '<', '>', '|']
+FORBIDDEN_CHARS: list[str] = ['\\', '/', ':', '*', '?', '"', '<', '>', '|']
 MAX_NAME_LENGTH: int = 12
 MAX_EXTENSION_LENGTH: int = 9
 FILE: str = 'file'

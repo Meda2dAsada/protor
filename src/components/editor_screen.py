@@ -24,7 +24,7 @@ class EditorScreen(Screen):
         self.__is_saved = True
         self.__editor = Editor(
             self.__file.content,
-            EXTENSIONS.get(self.__file.extension),
+            EXTENSIONS.get(self.__file.extension.lower()),
             'editor'
         )
         self.__set_title()
@@ -42,8 +42,8 @@ class EditorScreen(Screen):
 
     def __get_title_format(self):
         # returns a formatted title based on file name and extension, truncating if needed
-        formated = EntryCreator.format_split_name(self.__file.split_name, (MAX_NAME_LENGTH, MAX_EXTENSION_LENGTH))
-        return EntryCreator.join_file(formated)
+        formated = File.format_split_name(self.__file, (MAX_NAME_LENGTH, MAX_EXTENSION_LENGTH))
+        return File.join(formated)
 
     def __set_title(self):
         # updates the screen title to show file name and save status

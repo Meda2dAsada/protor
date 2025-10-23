@@ -19,7 +19,7 @@ class EntryScreen(JsonReader, Screen):
         self.__for_directories = for_directories
         self.__back_button = Button('Go back', id='back', classes='option_button')
         
-        json_path = PathManager.join_paths(
+        json_path = PathManager.join(
             ConfigCreator.DIRECTORIES_FILE if self.__for_directories else ConfigCreator.FILES_FILE,
             ConfigCreator.get_json_dir(),
         )

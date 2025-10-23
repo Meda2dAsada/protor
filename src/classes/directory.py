@@ -8,7 +8,7 @@ class Directory(Entry):
     def __init__(self, name: str, path: str = None, content: list[Entry] = None):
         super().__init__(name, path, DIRECTORY)
         self.__content: list[Entry] = None
-        self.content = content
+        self.content: list[Entry] = content
 
     @property
     def content(self) -> list[Entry]:
@@ -19,7 +19,7 @@ class Directory(Entry):
         if self.__content is None:
             self.__content = []
 
-        if isinstance(content, list) and all(isinstance(entry, (Directory, File)) for entry in content):
+        if isinstance(content, list):
             for entry in content:
                 self.add(entry)
 
@@ -28,21 +28,28 @@ class Directory(Entry):
         return len(self.__content) == 0
 
     def add(self, entry: Entry):
+        if entry == self:
+            raise TypeError(f"Can't add {self.absolute_path}, because is the same object." )
+        
         if isinstance(entry, (Directory, File)):
             entry.path = self.absolute_path
-
             if isinstance(entry, Directory):
-                for sub_entry in entry.content:
-                    sub_entry.path = entry.absolute_path
+                entry.__update_content_paths()
 
             self.__content.append(entry)
+
+    def __update_content_paths(self):
+        for entry in self.content:
+            entry.path = self.absolute_path
+            if isinstance(entry, Directory):
+                entry.__update_content_paths()
 
     def extends(self, entries: list[Entry]):
         for entry in entries:
             self.add(entry)
 
     def write_self(self):
-        EntryCreator.write_entry(self.absolute_path, None, self.entry_type)
+        EntryCreator.write_directory(self.absolute_path)
         self.write_content()
 
     def write_content(self):

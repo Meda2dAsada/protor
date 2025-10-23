@@ -18,7 +18,7 @@ class EntryManager(JsonReader):
         Build the absolute path to the JSON configuration file and
         initialize the parent JsonReader with that path.
         """
-        dirs_path = PathManager.join_paths(
+        dirs_path = PathManager.join(
             ConfigCreator.DIRECTORIES_FILE,
             ConfigCreator.get_json_dir()
         )
@@ -115,13 +115,13 @@ class EntryManager(JsonReader):
         return {
             "name": node["name"],
             "content": {
-                "directories": {
-                    "global": [list(dir_global) for dir_global in sorted(dirs_global, key=len)],
-                    "local": [list(dir_local) for dir_local in sorted(dirs_local, key=len)],
-                },
                 "files": {
                     "global": [list(file_global) for file_global in sorted(files_global, key=len)],
                     "local": [list(file_local) for file_local in sorted(files_local, key=len)],
                 },
+                "directories": {
+                    "global": [list(dir_global) for dir_global in sorted(dirs_global, key=len)],
+                    "local": [list(dir_local) for dir_local in sorted(dirs_local, key=len)],
+                }
             },
         }

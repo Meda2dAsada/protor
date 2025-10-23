@@ -7,9 +7,8 @@ class PathManager:
         return os.path.isfile(file_name)
 
     @staticmethod
-    def not_empty(content: str, strict_alnum: bool = False):
-        is_instance = isinstance(content, str) and bool(content.strip())
-        return is_instance and content.replace('.', '').isalnum() if strict_alnum else is_instance
+    def not_empty(content: str) -> bool:
+        return isinstance(content, str) and bool(content.strip())
     
     @staticmethod
     def is_directory(directory_name: str):
@@ -25,9 +24,11 @@ class PathManager:
     def get_env(key: str): return os.environ.get(key)
 
     @staticmethod
-    def join_paths(name: str, *dirs: str):
+    def join(name: str, *dirs: str):
+        if not dirs:
+            return name
         return '/'.join([*dirs, name])
 
     @staticmethod
-    def split_paths(path: str):
+    def split(path: str):
         return path.replace('\\', '/').split('/')
